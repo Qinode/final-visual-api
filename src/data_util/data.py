@@ -1,7 +1,7 @@
 from src.data_util import client
 import logging.config
 
-logging.config.fileConfig('../../logging.ini')
+logging.config.fileConfig('/api/logging.ini')
 logger = logging.getLogger(__name__)
 logger.setLevel("DEBUG")
 

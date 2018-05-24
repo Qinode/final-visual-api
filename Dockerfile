@@ -4,6 +4,6 @@ WORKDIR /api
 ADD . /api
 
 RUN pip install -r requirements.txt
-RUN chmod a+x /api/src/run.sh
+RUN chmod a+x /api/run.sh
 EXPOSE 8081
-CMD ["/api/src/run.sh"]
+CMD ["/api/run.sh"]
