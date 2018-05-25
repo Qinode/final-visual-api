@@ -13,8 +13,7 @@ def get_reading(sensor_id, field, timestamp, measurement='winery_data'):
     logger.info(query)
 
     try:
-        raw_res = client.query(query)
-        return [point for point in raw_res]
+        return list(client.query(query).get_points())
     except influxdb.exceptions.InfluxDBClientError:
         raise
 
