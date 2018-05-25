@@ -1,6 +1,6 @@
 import pytest
 from src.data_util import client
-from src.data_util.data import get_reading
+from src.data_util.get import get_reading
 
 
 def test_found():
