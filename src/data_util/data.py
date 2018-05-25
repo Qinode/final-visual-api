@@ -1,3 +1,5 @@
+import influxdb
+
 from src.data_util import client
 import logging.config
 
@@ -6,8 +8,14 @@ logger = logging.getLogger(__name__)
 logger.setLevel("DEBUG")
 
 
-def get_data(sensor_id, measurement, timestamp, series='winery_data'):
-    query = 'select {} from {} where sensor_id=\'{}\' and time>=\'{}\''.format(measurement, series, sensor_id, timestamp)
+def get_reading(sensor_id, field, timestamp, measurement='winery_data'):
+    query = 'select {} from {} where sensor_id=\'{}\' and time>=\'{}\''.format(field, measurement, sensor_id, timestamp)
     logger.info(query)
-    return client.query(query)
+
+    try:
+        raw_res = client.query(query)
+        return [point for point in raw_res]
+    except influxdb.exceptions.InfluxDBClientError:
+        raise
+
 
