@@ -1,5 +1,6 @@
 import falcon
 from src.resources.DataResources import DataResources
+from src.resources.MetadataResource import MetadataResources
 import logging.config
 
 logging.config.fileConfig('/api/logging.ini')
@@ -7,6 +8,7 @@ logging.config.fileConfig('/api/logging.ini')
 def create_app(data_store):
     app = falcon.API()
     app.add_route('/data', DataResources(data_store))
+    app.add_route('/metadata/fields', MetadataResources(data_store))
 
     return app
 
