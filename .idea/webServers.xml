@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="266160e7-071d-4a52-a9b9-9795f1bd74b9" name="cloudstack_api" url="http://146.169.47.32">
+        <fileTransfer host="146.169.47.32" port="21" rootFolder="/home/zq17/api">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

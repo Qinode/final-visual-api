@@ -1,18 +1,20 @@
 import falcon
 import json
-from src.data_util.get import *
+import logging
 
-logging.config.fileConfig('/api/logging.ini')
 logger = logging.getLogger(__name__)
-logger.setLevel("DEBUG")
 
 
 class DataResources:
+    def __init__(self, store):
+        self.__store = store
+
+
     def on_post(self, req, resp):
         params = json.load(req.bounded_stream)
         logger.info('request: {}'.format(params))
 
-        res = get_reading(sensor_id=params['sensor_id'], field=params['field'], timestamp=params['timestamp'])
+        res = self.__store.get_reading(sensor_id=params['sensor_id'], field=params['field'], timestamp=params['timestamp'])
         res_json = {"data": res}
 
         resp.status = falcon.HTTP_200
