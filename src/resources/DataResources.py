@@ -9,13 +9,21 @@ class DataResources:
     def __init__(self, store):
         self.__store = store
 
-
     def on_post(self, req, resp):
         params = json.load(req.bounded_stream)
         logger.info('request: {}'.format(params))
 
-        res = self.__store.get_reading(sensor_id=params['sensor_id'], field=params['field'], timestamp=params['timestamp'])
-        res_json = {"data": res}
+        try:
+            res = self.__store.get_reading(sensor_id=params['sensor_id'], field=params['field'], timestamp=params['timestamp'])
+            res_json = {"data": res}
+            resp.status = falcon.HTTP_200
+            resp.body = json.dumps(res_json)
+        except KeyError as error:
+            res_json = {"error message": 'KeyError: {}'.format(str(error))}
+            resp.status = falcon.HTTP_422
+            resp.body = json.dumps(res_json)
+        except Exception as error:
+            res_json = {"error message": str(error)}
+            resp.status = falcon.HTTP_422
+            resp.body = json.dumps(res_json)
 
-        resp.status = falcon.HTTP_200
-        resp.body = json.dumps(res_json)
