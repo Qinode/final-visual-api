@@ -8,8 +8,8 @@ class DataStore(object):
     def __init__(self, client):
         self.__client = client
 
-    def get_reading(self, sensor_id, field, timestamp, measurement='winery_data'):
-        query = 'select {} from {} where sensor_id=\'{}\' and time>=\'{}\''.format(field, measurement, sensor_id, timestamp)
+    def get_reading(self, sensor_id, field, start_from, measurement='winery_data'):
+        query = 'select {} from {} where sensor_id=\'{}\' and time>=\'{}\''.format(field, measurement, sensor_id, start_from)
         logger.debug(query)
 
         try:

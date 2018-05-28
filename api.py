@@ -1,7 +1,7 @@
 import falcon
-from src.resources.data_resource import DataResources
-from src.resources.metadata_field_resource import MetadataFieldResource
-from src.resources.metadata_sensor_resource import MetadataSensorResource
+from src.resources.data.series_start_from import SeriesStartFrom
+from src.resources.metadata.filed_info import FieldInfo
+from src.resources.metadata.sensor_infor import SensorInfo
 import logging.config
 
 logging.config.fileConfig('/api/logging.ini')
@@ -9,9 +9,9 @@ logging.config.fileConfig('/api/logging.ini')
 # Used for testing only, the data_store will be a mock object.
 def create_app(data_store):
     app = falcon.API()
-    ds = DataResources(data_store)
-    mf = MetadataFieldResource(data_store)
-    ms = MetadataSensorResource(data_store)
+    ds = SeriesStartFrom(data_store)
+    mf = FieldInfo(data_store)
+    ms = SensorInfo(data_store)
     app.add_route('/data', ds)
     app.add_route('/metadata/fields', mf)
     app.add_route('/metadata/sensors', ms)
@@ -36,9 +36,9 @@ def get_app():
     metadata_store = MetadataStore(client)
 
     app = falcon.API()
-    app.add_route('/data', DataResources(data_store))
-    app.add_route('/metadata/fields', MetadataFieldResource(metadata_store))
-    app.add_route('/metadata/sensors', MetadataSensorResource(metadata_store))
+    app.add_route('/data', SeriesStartFrom(data_store))
+    app.add_route('/metadata/fields', FieldInfo(metadata_store))
+    app.add_route('/metadata/sensors', SensorInfo(metadata_store))
 
     return app
 

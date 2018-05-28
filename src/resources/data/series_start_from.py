@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class MetadataSensorResource:
+class SeriesStartFrom:
     def __init__(self, store):
         self.__store = store
 
@@ -14,10 +14,8 @@ class MetadataSensorResource:
         logger.info('request: {}'.format(params))
 
         try:
-            res = self.__store.get_sensors(node_table=params['node_table'])
-            logger.info(res)
-            sensors= [{'sensor_id': e['sensor_id'], 'latlng': [e['lat'], e['lng']]} for e in res]
-            res_json = {"data": sensors}
+            res = self.__store.get_reading(sensor_id=params['sensor_id'], field=params['field'], start_from=params['timestamp'])
+            res_json = {"data": res}
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(res_json)
         except KeyError as error:
@@ -28,3 +26,4 @@ class MetadataSensorResource:
             res_json = {"error message": str(error)}
             resp.status = falcon.HTTP_422
             resp.body = json.dumps(res_json)
+

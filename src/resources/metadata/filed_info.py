@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class DataResources:
+class FieldInfo:
     def __init__(self, store):
         self.__store = store
 
@@ -14,8 +14,10 @@ class DataResources:
         logger.info('request: {}'.format(params))
 
         try:
-            res = self.__store.get_reading(sensor_id=params['sensor_id'], field=params['field'], timestamp=params['timestamp'])
-            res_json = {"data": res}
+            res = self.__store.get_fields(sensor_id=params['sensor_id'])
+            logger.info(res)
+            fields = [e['field'] for e in res]
+            res_json = {"data": fields}
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(res_json)
         except KeyError as error:
@@ -26,4 +28,3 @@ class DataResources:
             res_json = {"error message": str(error)}
             resp.status = falcon.HTTP_422
             resp.body = json.dumps(res_json)
-
