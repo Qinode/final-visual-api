@@ -8,6 +8,14 @@ class MetadataStore(object):
     def __init__(self, client):
         self.__client = client
 
+    def get_sensors(self, node_table):
+        query = 'select * from {}'.format(node_table)
+
+        try:
+            return list(self.__client.query(query).get_points())
+        except influxdb.exceptions.InfluxDBClientError:
+            raise
+
     def get_fields(self, sensor_id):
         query = 'select * from {sensor_id}'.format(sensor_id=sensor_id)
         logger.debug(query)

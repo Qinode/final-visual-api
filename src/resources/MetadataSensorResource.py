@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class MetadataResources:
+class MetadataSensorResource:
     def __init__(self, store):
         self.__store = store
 
@@ -14,10 +14,10 @@ class MetadataResources:
         logger.info('request: {}'.format(params))
 
         try:
-            res = self.__store.get_fields(sensor_id=params['sensor_id'])
+            res = self.__store.get_fields(node_table=params['node_table'])
             logger.info(res)
-            fields = [e['field'] for e in res]
-            res_json = {"data": fields}
+            sensors= [{'sensor_id': e['sensor_id'], 'latlng': [e['lat'], e['lng']]} for e in res]
+            res_json = {"data": sensors}
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(res_json)
         except KeyError as error:

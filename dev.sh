@@ -6,4 +6,4 @@ docker rmi api:latest
 
 docker build -t api .
 
-docker run api py.test -s
+docker run api py.test -s -v
