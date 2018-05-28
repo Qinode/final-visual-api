@@ -23,7 +23,7 @@ class DataStore(object):
                 field=field, measurement=measurement, group_tag=group_tag)
 
             try:
-                res = list(self.__client.query(query).item())
-                return [{'sensor_id': e[0][1]['sensor_id'], 'field1': list(e[1])[0]['field1']} for e in res]
+                res = list(self.__client.query(query).items())
+                return [{'sensor_id': e[0][1]['sensor_id'], field: list(e[1])[0][field]} for e in res]
             except influxdb.exceptions.InfluxDBClientError:
                 raise

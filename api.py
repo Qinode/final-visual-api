@@ -1,4 +1,6 @@
 import falcon
+
+from src.resources.data.series_latest import SeriesLatest
 from src.resources.data.series_start_from import SeriesStartFrom
 from src.resources.metadata.filed_info import FieldInfo
 from src.resources.metadata.sensor_infor import SensorInfo
@@ -10,9 +12,11 @@ logging.config.fileConfig('/api/logging.ini')
 def create_app(data_store):
     app = falcon.API()
     ds = SeriesStartFrom(data_store)
+    sl = SeriesLatest(data_store)
     mf = FieldInfo(data_store)
     ms = SensorInfo(data_store)
     app.add_route('/data', ds)
+    app.add_route('/data/latest', sl)
     app.add_route('/metadata/fields', mf)
     app.add_route('/metadata/sensors', ms)
 
