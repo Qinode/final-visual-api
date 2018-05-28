@@ -11,7 +11,7 @@ def data_client():
 
 @pytest.fixture(scope='function')
 def data_store(data_client):
-    from src.store.MetadataStore import MetadataStore
+    from src.store.metadata_store import MetadataStore
     metadata_store = MetadataStore(data_client)
     return metadata_store
 

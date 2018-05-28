@@ -9,7 +9,7 @@ def data_client():
 
 @pytest.fixture(scope='module')
 def data_store():
-    from src.store.MetadataStore import MetadataStore
+    from src.store.metadata_store import MetadataStore
     return MetadataStore(data_client())
 
 

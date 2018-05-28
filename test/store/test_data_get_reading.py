@@ -8,7 +8,7 @@ def data_client():
 
 @pytest.fixture()
 def data_store():
-    from src.store.DataStore import DataStore
+    from src.store.data_store import DataStore
     return DataStore(data_client())
 
 

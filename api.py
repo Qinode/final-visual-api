@@ -1,7 +1,7 @@
 import falcon
-from src.resources.DataResource import DataResources
-from src.resources.MetadataFieldResource import MetadataFieldResource
-from src.resources.MetadataSensorResource import MetadataSensorResource
+from src.resources.data_resource import DataResources
+from src.resources.metadata_field_resource import MetadataFieldResource
+from src.resources.metadata_sensor_resource import MetadataSensorResource
 import logging.config
 
 logging.config.fileConfig('/api/logging.ini')
@@ -27,8 +27,8 @@ def get_client():
 
 
 def get_app():
-    from src.store.DataStore import DataStore
-    from src.store.MetadataStore import MetadataStore
+    from src.store.data_store import DataStore
+    from src.store.metadata_store import MetadataStore
 
     client = get_client()
 
