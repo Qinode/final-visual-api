@@ -14,7 +14,7 @@ class MetadataSensorResource:
         logger.info('request: {}'.format(params))
 
         try:
-            res = self.__store.get_fields(node_table=params['node_table'])
+            res = self.__store.get_sensors(node_table=params['node_table'])
             logger.info(res)
             sensors= [{'sensor_id': e['sensor_id'], 'latlng': [e['lat'], e['lng']]} for e in res]
             res_json = {"data": sensors}

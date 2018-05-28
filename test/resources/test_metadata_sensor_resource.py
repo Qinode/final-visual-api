@@ -35,7 +35,7 @@ def test_field_key_error(client):
 
 
 def test_on_post_found(client, mock_metadata_store):
-    mock_metadata_store.get_fields.return_value = [{'sensor_id': 'node1', 'time': '2018-05-27T16:37:31.428136866Z', 'lat': 1, 'lng': 1},
+    mock_metadata_store.get_sensors.return_value = [{'sensor_id': 'node1', 'time': '2018-05-27T16:37:31.428136866Z', 'lat': 1, 'lng': 1},
                                                {'sensor_id': 'node2', 'time': '2018-05-27T16:37:31.428136866Z', 'lat': 2, 'lng': 2}]
     params = {"node_table": 'nt'}
     result = client.simulate_post('/metadata/sensors', json=params)
