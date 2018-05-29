@@ -3,10 +3,10 @@ import falcon
 from src.resources.data.series_latest import SeriesLatest
 from src.resources.data.series_start_from import SeriesStartFrom
 from src.resources.metadata.filed_info import FieldInfo
-from src.resources.metadata.sensor_infor import SensorInfo
+from src.resources.metadata.sensor_info import SensorInfo
 import logging.config
 
-logging.config.fileConfig('/api/logging.ini')
+logging.config.fileConfig('/api/config/logging.ini')
 
 # Used for testing only, the data_store will be a mock object.
 def create_app(data_store):
@@ -31,6 +31,8 @@ def get_client():
 
 
 def get_app():
+    from falcon_cors import CORS
+
     from src.store.data_store import DataStore
     from src.store.metadata_store import MetadataStore
 
@@ -39,7 +41,9 @@ def get_app():
     data_store = DataStore(client)
     metadata_store = MetadataStore(client)
 
-    app = falcon.API()
+    cors = CORS(allow_all_origins=True, allow_all_methods=True, allow_all_headers=True)
+
+    app = falcon.API(middleware=[cors.middleware])
     app.add_route('/data', SeriesStartFrom(data_store))
     app.add_route('/data/latest', SeriesLatest(data_store))
     app.add_route('/metadata/fields', FieldInfo(metadata_store))

@@ -2,20 +2,20 @@ import falcon
 import json
 import logging
 
-logger = logging.getLogger(__name__)
-
 
 class SensorInfo:
     def __init__(self, store):
         self.__store = store
+        self.logger = logging.getLogger(__name__)
 
     def on_post(self, req, resp):
         params = json.load(req.bounded_stream)
-        logger.info('request: {}'.format(params))
+        self.logger.info('request: {}'.format(params))
+        self.logger.info(req.host)
 
         try:
             res = self.__store.get_sensors(node_table=params['node_table'])
-            logger.info(res)
+            self.logger.info(res)
             sensors = [{'sensor_id': e['sensor_id'], 'latlng': [e['lat'], e['lng']]} for e in res]
             res_json = {"data": sensors}
             resp.status = falcon.HTTP_200

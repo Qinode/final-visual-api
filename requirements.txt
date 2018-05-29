@@ -3,3 +3,5 @@ gunicorn
 influxdb
 pytest
 mock
+eventlet
+falcon-cors
