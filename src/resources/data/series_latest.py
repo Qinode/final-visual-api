@@ -14,7 +14,7 @@ class SeriesLatest:
         logger.info('request: {}'.format(params))
 
         try:
-            res = self.__store.get_latest(sensor_id=params['sensor_id'], field=params['field'])
+            res = self.__store.get_latest(field=params['field'])
             res_json = {"data": res}
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(res_json)

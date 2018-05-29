@@ -17,7 +17,7 @@ class DataStore(object):
         except influxdb.exceptions.InfluxDBClientError:
             raise
 
-    def get_latest(self, field, group_tag='sensor_id', measurement='winery_data', sensor_id = None):
+    def get_latest(self, field, group_tag='sensor_id', measurement='winery_data', sensor_id=None):
         if sensor_id is None:
             query = 'select {field} from {measurement} group by {group_tag} order by time desc limit 1'.format(
                 field=field, measurement=measurement, group_tag=group_tag)

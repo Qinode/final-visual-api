@@ -16,7 +16,7 @@ class SensorInfo:
         try:
             res = self.__store.get_sensors(node_table=params['node_table'])
             logger.info(res)
-            sensors= [{'sensor_id': e['sensor_id'], 'latlng': [e['lat'], e['lng']]} for e in res]
+            sensors = [{'sensor_id': e['sensor_id'], 'latlng': [e['lat'], e['lng']]} for e in res]
             res_json = {"data": sensors}
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(res_json)

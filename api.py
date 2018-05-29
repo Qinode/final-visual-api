@@ -41,6 +41,7 @@ def get_app():
 
     app = falcon.API()
     app.add_route('/data', SeriesStartFrom(data_store))
+    app.add_route('/data/latest', SeriesLatest(data_store))
     app.add_route('/metadata/fields', FieldInfo(metadata_store))
     app.add_route('/metadata/sensors', SensorInfo(metadata_store))
 
