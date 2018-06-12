@@ -2,6 +2,7 @@ import falcon
 
 from src.resources.data.series_latest import SeriesLatest
 from src.resources.data.series_start_from import SeriesStartFrom
+from src.resources.data.corr import Correlation
 from src.resources.metadata.filed_info import FieldInfo
 from src.resources.metadata.sensor_info import SensorInfo
 import logging.config
@@ -15,19 +16,25 @@ def create_app(data_store):
     sl = SeriesLatest(data_store)
     mf = FieldInfo(data_store)
     ms = SensorInfo(data_store)
+    corr = Correlation(data_store)
     app.add_route('/data', ds)
     app.add_route('/data/latest', sl)
     app.add_route('/metadata/fields', mf)
     app.add_route('/metadata/sensors', ms)
+    app.add_route('/data/corr', corr)
 
     return app
 
 
 def get_client():
     from influxdb import InfluxDBClient
-    client = InfluxDBClient(host='146.169.47.32', username='zq17', password='661231Icl', database='winery_data')
+    import config.DatabaseConfig as db_config
+    import os
 
-    return client
+    if os.environ['API_ENV'] == 'dev':
+        config = db_config.DevConfig
+        client = InfluxDBClient(host=config.url, username=config.username, password=config.password, database=config.database)
+        return client
 
 
 def get_app():

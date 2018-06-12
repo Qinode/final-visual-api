@@ -6,14 +6,14 @@ logger = logging.getLogger(__name__)
 
 class DataStore(object):
     def __init__(self, client):
-        self.__client = client
+        self._client = client
 
-    def get_reading(self, sensor_id, field, start_from, measurement='winery_data'):
+    def get_reading(self, sensor_id, field, start_from, measurement):
         query = 'select {} from {} where sensor_id=\'{}\' and time>=\'{}\''.format(field, measurement, sensor_id, start_from)
         logger.debug(query)
 
         try:
-            return list(self.__client.query(query).get_points())
+            return list(self._client.query(query).get_points())
         except influxdb.exceptions.InfluxDBClientError:
             raise
 
@@ -23,7 +23,7 @@ class DataStore(object):
                 field=field, measurement=measurement, group_tag=group_tag)
 
             try:
-                res = list(self.__client.query(query).items())
+                res = list(self._client.query(query).items())
                 return [{'sensor_id': e[0][1]['sensor_id'], field: list(e[1])[0][field]} for e in res]
             except influxdb.exceptions.InfluxDBClientError:
                 raise

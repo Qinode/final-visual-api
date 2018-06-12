@@ -6,13 +6,13 @@ logger = logging.getLogger(__name__)
 
 class MetadataStore(object):
     def __init__(self, client):
-        self.__client = client
+        self._client = client
 
     def get_sensors(self, node_table):
         query = 'select * from {}'.format(node_table)
 
         try:
-            return list(self.__client.query(query).get_points())
+            return list(self._client.query(query).get_points())
         except influxdb.exceptions.InfluxDBClientError:
             raise
 
@@ -21,7 +21,7 @@ class MetadataStore(object):
         logger.debug(query)
 
         try:
-            return list(self.__client.query(query).get_points())
+            return list(self._client.query(query).get_points())
         except influxdb.exceptions.InfluxDBClientError:
             raise
 
