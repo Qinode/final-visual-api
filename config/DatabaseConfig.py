@@ -6,7 +6,7 @@ class BaseConfig:
 class DevConfig(BaseConfig):
     url = '146.169.47.32'
     username = 'zq17'
-    password = '661231Icl'
+    password = '*'
     database = 'winery_data'
 
 
